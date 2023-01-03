@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Daria Ras</title>
+
+    <!-- for fontawesome Kit's Code -->
+    <script src="https://kit.fontawesome.com/f2b27e0f87.js" crossorigin="anonymous"></script>
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <!-- for jQuery (должен быть подключен до скриптов) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- for htmx search -->
+    <script src="https://unpkg.com/htmx.org@1.8.4" integrity="sha384-wg5Y/JwF7VxGk4zLsJEcAojRtlVp1FKKdGy1qN+OMtdq72WRvX/EdRdqg/LOhYeV" crossorigin="anonymous"></script>
+
+    <!--подключение скриптов и стилей bootstrap для уведомления-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+</head>
+<body>
+
+<style>
+    .col-sm {
+        text-align: center;
+    }
+    .label-form {
+        float: left;
+        margin: 0 10% 0 10%;
+        text-align: left;
+    }
+    .container {
+        width: 80%;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-sm"></div>
+        <div class="col-sm">
+            <br>
+            <h1>Здравствуйте, Дарья!</h1><br>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <p><label class="label-form">Начальное время:</label>
+                    <input name="time-in" id="time-in" class="form-control" placeholder="введите время" type="text"></p>
+
+                <p align="right"><i onclick="replaceTime()" class="fa-solid fa-arrow-down"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <i onclick="clearForm()" class="fa-solid fa-reply-all"></i>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+
+                <p><label class="label-form">Конечное время:</label>
+                    <input name="time-out" id="time-out" class="form-control" placeholder="введите время" type="text"></p>
+
+                <p class="label-form">Вводите время через пробел (чч мм сс)! Пример: 12 54 08</p>
+                <br><br><br>
+
+                <button
+                        class="btn btn-success btn-sm"
+                        type="button"
+                        hx-post="{% url 'calculation' %}"
+                        hx-trigger="click"
+                        hx-target="#form-result">Рассчитать время
+                </button>
+
+            </form><br>
+
+            <div id="form-result">
+
+            </div>
+
+        </div>
+        <div class="col-sm"></div>
+    </div>
+</div>
+<script>
+    function replaceTime() {
+        var time_1 = document.querySelector("#time-in");
+        var time_2 = document.querySelector("#time-out");
+        time_2.value = time_1.value;
+        time_1.value = '';
+    };
+
+    function clearForm() {
+        var time_1 = document.querySelector("#time-in");
+        var time_2 = document.querySelector("#time-out");
+        time_1.value = '';
+        time_2.value = '';
+    };
+</script>
+</body>
+</html>
